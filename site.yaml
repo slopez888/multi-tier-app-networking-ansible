@@ -1,0 +1,32 @@
+---
+# Setup Networking for Application Support
+- name: setup VLANs and ports on switches
+  hosts: leafs
+  become: yes
+  roles:
+    - leaf-switch
+
+# Deploy a simple web application
+- name: depoy multi-tier web application
+  hosts: webservers
+  become: yes
+  roles:
+    - app
+    - web
+    
+
+# Setup LB tier
+- name: setup LB tier
+  hosts: frontends
+  become: yes
+  roles:
+    - lb
+   
+# Setup Firewall for Application 
+- name: setup firewall tier
+  hosts: pan-fw
+  become: yes
+  roles:
+    - firewall
+
+

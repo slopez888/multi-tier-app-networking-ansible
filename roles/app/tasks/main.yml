@@ -1,0 +1,27 @@
+---
+
+- name: install {{ app_pkg }}
+  yum:
+    name: "{{ app_pkg }}"
+    state: latest
+
+- name: enable {{ app_pkg }} at boot
+  service:
+    name: "{{ app_pkg }}"
+    enabled: yes
+
+- name: create tomcat default web directory
+  file:
+    path: "{{ tomcat_web_root }}"
+    state: directory
+
+- name: copy static index.html to tomcat webroot
+  template:
+    src: index.html.j2
+    dest: "{{ tomcat_web_root }}/index.html"
+    mode: 0644
+
+- name: restart tomcat
+  service:
+    name: "{{ app_pkg }}"
+    state: restarted

@@ -1,0 +1,7 @@
+---
+# handlers file for lb
+
+- name: restart "{{ lb_pkg }}"
+  service:
+    name: "{{ lb_pkg }}"
+    state: restarted

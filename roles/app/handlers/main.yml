@@ -1,0 +1,6 @@
+# handlers file for app
+
+- name: restart "{{ app-pkg }}"
+  service:
+    name: "{{ app-pkg }}"
+    state: restarted

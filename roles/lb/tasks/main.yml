@@ -1,0 +1,22 @@
+---
+
+- name: install haproxy
+  yum:
+    name: "{{ lb_pkg }}"
+    state: latest
+
+- name: enable {{ lb_pkg }} at boot
+  service:
+    name: "{{ lb_pkg }}"
+    enabled: yes
+
+- name: configure {{ lb_pkg }} to load balance over app servers
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0644
+
+- name: start {{ lb_pkg }}
+  service:
+    name: "{{ lb_pkg }}"
+    state: restarted
