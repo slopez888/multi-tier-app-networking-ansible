@@ -1,0 +1,14 @@
+---
+- name: Create Cherwell ticket
+  uri:
+    url: "https://cherwell.sutterhealth.org/CherwellAPI/api/V1/create_ticket"
+    method: POST
+    body:
+      application_name: multi-tier-application
+      user: developer
+      cost_center: aa001
+    body_format: json
+    user: "{{ cherwell_user }}"
+    password: "{{ cherwell_password }}"
+    status_code: 200  
+  register: ticket

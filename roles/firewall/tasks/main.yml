@@ -1,0 +1,65 @@
+  - name: Grab the credentials from ansible-vault
+    include_vars: 'firewall-secrets.yml'
+    no_log: 'yes'
+
+  - name: Add an address object to the firewall
+    panos_object:
+      ip_address: '{{ ip_address }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      addressobject: 'host-1.2.3.4'
+      address: '1.2.3.4'
+      address_type: 'ip-netmask'
+      description: 'This is a test address object'
+      operation: 'add'
+
+  - name: Add another address object to the firewall
+    panos_object:
+      ip_address: '{{ ip_address }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      addressobject: 'range-192.168.100.100-200'
+      address: '192.168.100.100-192.168.100.200'
+      address_type: 'ip-range'
+      description: 'This is a another test address object'
+      operation: 'add'
+
+  - name: Add an address group to the firewall
+    panos_object:
+      ip_address: '{{ ip_address }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      addressgroup: 'test-address-group'
+      static_value: ['host-1.2.3.4','range-192.168.100.100-200']
+      description: 'This is a test addressgroup'
+      operation: 'add'
+
+  - name: Add a service to the firewall
+    panos_object:
+      ip_address: '{{ ip_address }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      serviceobject: 'multi-tier app'
+      protocol: 'tcp'
+      destination_port: '8889'
+      description: 'This is a new service object'
+      operation: 'add'
+
+  - name: Add new rule for multi-tier app to the firewall
+    panos_security_rule:
+      ip_address: '{{ ip_address }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      operation: 'add'
+      rule_name: 'Multi-Tier-App 1'
+      description: 'An Ansible provided rule'
+      source_zone: ['internal']
+      destination_zone: ['external']
+      source_ip: ['host-1.2.3.4']
+      source_user: ['any']
+      destination_ip: ['any']
+      category: ['any']
+      application: ['any']
+      service: ['service-xyz']
+      hip_profiles: ['any']
+      action: 'allow'

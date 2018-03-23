@@ -1,0 +1,11 @@
+- name: Close Cherwell ticket
+  uri:
+    url: "https://cherwell.sutterhealth.org/CherwellAPI/api/V1/close_ticket"
+    method: POST
+    body:
+      ticket: "{{ ticket }}"
+      comment: application deployment successful
+    body_format: json
+    user: "{{ cherwell_user }}"
+    password: "{{ cherwell_password }}"
+    status_code: 200  

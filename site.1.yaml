@@ -1,25 +1,20 @@
 ---
-## This playbook deploys a multi-tier application and configures the infrastructure
-# Create ITSM Ticket
-- name: create ITSM ticket
+- name: Deploy Sutter Health Multi-Tier Application
   hosts: localhost
+  
   roles:
-    - cherwell_create_ticket
+    - role: cherwell_create_ticket
 
-# Setup Networking for Application Support
-- name: setup VLANs and ports on switches
+- name: Setup VLANs and ports on switches
   hosts: leafs
-  become: yes
   roles:
-    - leaf_switch
+    - role: leaf_switch
 
-# Deploy a simple web application
 - name: depoy multi-tier web application
   hosts: webservers
-  become: yes
   roles:
-    - app
-    - web  
+    - role: app
+    - role: web  
 
 # Setup LB tier
 - name: setup LB tier
@@ -29,7 +24,7 @@
     - lb
    
 # Setup Firewall for Application 
-- name: setup firewall 
+- name: setup firewall tier
   hosts: pan-fw
   become: yes
   roles:
