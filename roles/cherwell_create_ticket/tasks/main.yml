@@ -1,7 +1,7 @@
 ---
 - name: Create Cherwell ticket
   uri:
-    url: "https://cherwell.sutterhealth.org/CherwellAPI/api/V1/create_ticket"
+    url: "{{ cherwell_create_ticket_url }}"
     method: POST
     body:
       application_name: multi-tier-application

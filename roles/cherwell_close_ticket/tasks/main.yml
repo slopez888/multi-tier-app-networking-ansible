@@ -1,6 +1,6 @@
 - name: Close Cherwell ticket
   uri:
-    url: "https://cherwell.sutterhealth.org/CherwellAPI/api/V1/close_ticket"
+    url: "{{ cherwell_ticket_url }}"
     method: POST
     body:
       ticket: "{{ ticket }}"

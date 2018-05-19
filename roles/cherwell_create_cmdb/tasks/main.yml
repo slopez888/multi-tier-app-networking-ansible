@@ -1,6 +1,6 @@
 - name: Create Cherwell CMDB record
   uri:
-    url: "https://cherwell.sutterhealth.org/CherwellAPI/api/V1/create_cmdb_record"
+    url: "{{ cherwell_cmdb_url }}"
     method: POST
     body:
       payload: "{{ payload }}"

@@ -1,22 +1,27 @@
 ---
 ## This playbook deploys a multi-tier application and configures the infrastructure
+
 # Create ITSM Ticket
 - name: create ITSM ticket
   hosts: localhost
   roles:
     - cherwell_create_ticket
 
-# Setup Networking for Application Support
+# Provision VM
+- name: provision vm
+  hosts: hypervisors
+  roles:
+    - provision_vm
+
+# Validate or Setup Networking for Application Support
 - name: setup VLANs and ports on switches
   hosts: leafs
-  become: yes
   roles:
     - leaf_switch
 
 # Deploy a simple web application
 - name: depoy multi-tier web application
   hosts: webservers
-  become: yes
   roles:
     - app
     - web  
@@ -24,14 +29,12 @@
 # Setup LB tier
 - name: setup LB tier
   hosts: frontends
-  become: yes
   roles:
     - lb
    
 # Setup Firewall for Application 
 - name: setup firewall 
   hosts: pan-fw
-  become: yes
   roles:
     - firewall
 

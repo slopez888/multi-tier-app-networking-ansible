@@ -1,3 +1,8 @@
 .DS_Store
 .vscode
 
+.site-1.yaml
+
+roles/cherwell_close_ticket/tasks/main_orig.yml
+roles/cherwell_create_ticket/tasks/main_orig.yml
+roles/cherwell_create_cmdb/tasks/main_orig.yml
